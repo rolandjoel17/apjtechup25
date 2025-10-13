@@ -1,7 +1,8 @@
 -- Sample Analytical Queries for E-Commerce Data Lakehouse Gold Layer
 -- These queries demonstrate the business value of the medallion architecture
 
-USE ecommerce_gold;
+USE catalog apjtechup;
+use schema gold;
 
 -- =============================================================================
 -- 1. EXECUTIVE DASHBOARD QUERIES
@@ -124,7 +125,7 @@ SELECT
     ROUND(AVG(inventory_turnover_ratio), 1) as avg_turnover
 FROM product_performance
 GROUP BY category_name
-ORDER BY SUM(total_revenue) DESC;
+ORDER BY total_revenue DESC;
 
 -- Product Lifecycle Analysis
 SELECT 'Product Lifecycle Distribution' as analysis_type;
@@ -137,7 +138,7 @@ SELECT
     COUNT(CASE WHEN performance_tier = 'Star' THEN 1 END) as star_products
 FROM product_performance
 GROUP BY lifecycle_stage
-ORDER BY SUM(total_revenue) DESC;
+ORDER BY total_revenue DESC;
 
 -- Inventory Optimization Opportunities
 SELECT 'Inventory Optimization Alerts' as analysis_type;
@@ -236,7 +237,7 @@ SELECT
 FROM sales_summary
 WHERE date_key >= CURRENT_DATE() - INTERVAL 90 DAYS
 GROUP BY region
-ORDER BY SUM(gross_revenue) DESC;
+ORDER BY total_revenue DESC;
 
 -- =============================================================================
 -- 6. COHORT ANALYSIS
@@ -322,7 +323,7 @@ GROUP BY
         WHEN category_diversity_score >= 1.0 THEN 'Low Diversity (1+ category/order)'
         ELSE 'Single Category'
     END
-ORDER BY AVG(customer_lifetime_value) DESC;
+ORDER BY avg_ltv DESC;
 
 -- =============================================================================
 -- 8. BUSINESS ALERTS & RECOMMENDATIONS
