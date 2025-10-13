@@ -71,7 +71,7 @@ SELECT
     CONCAT(ROUND(AVG(churn_risk_score), 2)) as avg_churn_risk
 FROM customer_metrics
 GROUP BY customer_segment
-ORDER BY AVG(customer_lifetime_value) DESC;
+ORDER BY avg_ltv DESC;
 
 -- Churn Risk Analysis
 SELECT 'High Churn Risk Customers' as analysis_type;
